@@ -51,7 +51,7 @@ Now you need to merge your feature branch into main, but both have changed!
 
 1. Go to the **Pull Requests** tab.
 2. Click **New pull request**.
-3. Set **base: main** and **compare: feature/dark-mode**.
+3. Set **base: main** and **compare: feature/dark-mode**.  
 4. You should see a message: **Can’t automatically merge**.
 5. Click **Create pull request**.
 

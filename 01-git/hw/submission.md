@@ -1,1 +1,5 @@
 I think git will be useful if I am ever working on a software project with people in the future. If I have to work with a bunch of people on a team it would be needed to see changes. Also even for personal projects especially ones that I forget out for a year and then go back to it would be very helpful in terms of figuring out what code does what and what I was thinking when I wrote the code.
+
+I think git could be useful in my future careers if I ever need to collaborate on software based projects. I'm looking to go into accounting/finance, and along with my minor in data science, I'm fairly certain coding in Python will come in handy at some point, and if it is ever necessary git will help tremendously in keeping myself organized as well as others organized.
+
+! [success photo] (success.jpg) 
