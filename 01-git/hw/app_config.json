@@ -1,6 +1,11 @@
 {
   "appName": "TechConsultingApp",
+feature/dark-mode
   "version": "1.1.0-beta",
-  "theme": "dark again",
+  "theme": "dark",
+
+  "version": "1.0.1",
+  "theme": "dark",
+main
   "maxUsers": 500
 }
