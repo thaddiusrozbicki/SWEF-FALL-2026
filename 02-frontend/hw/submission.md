@@ -18,8 +18,8 @@ My interest page is `/cars`. I've gone to Monterey Car Week the past couple of y
 
 ## Screenshots
 
-- Home: ![Home page](home.png)
-- Interest: ![Cars page](interest.png)
+- Home: ![Home page](home.jpg)
+- Interest: ![Cars page](interest.jpg)
 
 ## Project location
 
