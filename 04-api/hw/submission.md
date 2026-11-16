@@ -11,4 +11,4 @@ POST /ask takes a prompt sent from Insomnia and forwards it to OpenAI's Chat Com
 - [ ] Insomnia got `{ reply: ... }`
 - [x] I ran `git status` — `.env` and `node_modules` were **not** staged
 
-Note: The route is written and set up, but I wasn't able to get a working OpenAI API key without paying, so I couldn't get a reply back. I've messaged the facilitators about it.
+Note: The route is written and set up, but I wasn't able to get a working OpenAI API key without paying, so I couldn't get a reply back.
