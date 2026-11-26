@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TAMID Members</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <div class="top">
+      <div>
+        <h1>Member directory</h1>
+        <p class="sub" id="who">Loading…</p>
+      </div>
+      <button class="ghost" id="logout">Log out</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Major</th><th>TAMID class</th><th>Email</th><th>Hometown</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="error" id="error" role="alert"></p>
+  </main>
+
+  <script type="module">
+    import { supabase } from "./supabase.js";
+
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) window.location.href = "index.html";
+    const myEmail = session.user.email;
+    document.getElementById("who").textContent = `Logged in as ${myEmail}`;
+
+    // Public info for everyone (from the view)
+    const pub = await supabase.from("members_public").select("*").order("id");
+    // Private info, Supabase only returns the rows RLS allows
+    const priv = await supabase.from("members").select("id, email, hometown");
+
+    if (pub.error || priv.error) {
+      document.getElementById("error").textContent =
+        "Couldn't load members. " + (pub.error || priv.error).message;
+    } else {
+      const privateById = new Map(priv.data.map((r) => [r.id, r]));
+      const locked = '<span class="locked">Private</span>';
+      const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+      document.getElementById("rows").innerHTML = pub.data.map((m) => {
+        const p = privateById.get(m.id);
+        const isMe = p && p.email === myEmail;
+        return `<tr class="${isMe ? "me" : ""}">
+          <td>${esc(m.name)}</td>
+          <td>${esc(m.major)}</td>
+          <td>${esc(m.tamid_class)}</td>
+          <td>${p ? esc(p.email) : locked}</td>
+          <td>${p ? esc(p.hometown) : locked}</td>
+        </tr>`;
+      }).join("");
+    }
+
+    document.getElementById("logout").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TAMID Members · Log in</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="login">
+    <h1>TAMID members</h1>
+    <p class="sub">Log in to see the member directory.</p>
+
+    <form id="login-form">
+      <label>Email
+        <input type="email" id="email" autocomplete="email" required>
+      </label>
+      <label>Password
+        <input type="password" id="password" autocomplete="current-password" required>
+      </label>
+      <button type="submit">Log in</button>
+      <p class="error" id="error" role="alert"></p>
+    </form>
+  </main>
+
+  <script type="module">
+    import { supabase } from "./supabase.js";
+
+    // Already logged in? Skip straight to the directory.
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) window.location.href = "members.html";
+
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const errorEl = document.getElementById("error");
+      errorEl.textContent = "";
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value,
+      });
+
+      if (error) {
+        errorEl.textContent = "Wrong email or password. Check both and try again.";
+        return;
+      }
+      window.location.href = "members.html";
+    });
+  </script>
+</body>
+</html>
