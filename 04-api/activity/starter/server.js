@@ -44,18 +44,37 @@ app.get("/books/:id", (req, res) => {
 // ---------------------------------------------------------------------------
 
 app.post("/books", (req, res) => {
-  // TODO: title/author from req.body; 400 if missing; push; 201
-  res.status(501).json({ error: "POST /books not implemented yet" });
+  const { title, author } = req.body;
+
+  if (!title || !author) {
+    return res.status(400).json({ error: "title and author are required" });
+  }
+
+  const book = { id: nextId++, title, author, read: false };
+  books.push(book);
+  res.status(201).json(book);
 });
 
 app.put("/books/:id", (req, res) => {
-  // TODO: find by id; 404 if missing; update from req.body; 200
-  res.status(501).json({ error: "PUT /books/:id not implemented yet" });
+  const book = books.find((b) => b.id === Number(req.params.id));
+
+  if (!book) {
+    return res.status(404).json({ error: "Book not found" });
+  }
+
+  Object.assign(book, req.body);
+  res.json(book);
 });
 
 app.delete("/books/:id", (req, res) => {
-  // TODO: findIndex by id; 404 if missing; splice; 200 { deleted }
-  res.status(501).json({ error: "DELETE /books/:id not implemented yet" });
+  const index = books.findIndex((b) => b.id === Number(req.params.id));
+
+  if (index === -1) {
+    return res.status(404).json({ error: "Book not found" });
+  }
+
+  const deleted = books.splice(index, 1)[0];
+  res.json({ deleted });
 });
 
 app.listen(PORT, () => {

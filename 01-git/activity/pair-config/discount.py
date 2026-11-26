@@ -1,2 +1,2 @@
 # Team discount setting — you and your partner will both edit this line.
-DISCOUNT_PERCENT = 10
+DISCOUNT_PERCENT = 20
